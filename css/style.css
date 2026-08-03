@@ -816,7 +816,7 @@ body {
 
 .about {
   background-color: #1A1A1A;
-  background: url("../img/about/about-bg.png") 0 100%/cover no-repeat;
+  background: url("../img/about/about-bg.webp") 0 100%/cover no-repeat;
 }
 
 .about__container {
@@ -3111,7 +3111,7 @@ button.swiper-pagination-bullet {
 @media (max-width: 45.9375em) {
   .about {
     background-color: #1A1A1A;
-    background: url("../img/about/about-bg.png") 0 0/contain no-repeat;
+    background: url("../img/about/about-bg.webp") 0 0/contain no-repeat;
   }
 }
 
@@ -3155,7 +3155,7 @@ button.swiper-pagination-bullet {
 
 @media (max-width: 34.6875em) {
   .about {
-    background: url("../img/about/about-bg.png") -40px 0/cover no-repeat;
+    background: url("../img/about/about-bg.webp") -40px 0/cover no-repeat;
   }
 
   .bottom {
