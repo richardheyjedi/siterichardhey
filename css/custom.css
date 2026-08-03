@@ -78,6 +78,15 @@ html {
 	transform-origin: left;
 }
 
+.menu__link--active {
+	opacity: 1;
+}
+
+.menu__link--active::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
 /* ---- Logo em texto no cabeçalho ---- */
 .logo-text {
 	display: inline-flex;

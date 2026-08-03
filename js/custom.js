@@ -1,5 +1,25 @@
 // Richard Hey Studios — animações e experiência (GSAP)
 (function () {
+	/* ---------- Menu: indicador de seção ativa (não depende do GSAP) ---------- */
+	var spySections = ['links', 'sobre', 'contato']
+		.map(function (id) { return document.getElementById(id); })
+		.filter(Boolean);
+	var menuLinks = document.querySelectorAll('.menu__link');
+	function updateActiveLink() {
+		var pos = window.scrollY + window.innerHeight * 0.4;
+		var current = '';
+		spySections.forEach(function (sec) {
+			var top = sec.getBoundingClientRect().top + window.scrollY;
+			if (top <= pos && top + sec.offsetHeight > pos) current = '#' + sec.id;
+		});
+		menuLinks.forEach(function (l) {
+			l.classList.toggle('menu__link--active', l.getAttribute('href') === current);
+		});
+	}
+	window.addEventListener('scroll', updateActiveLink, { passive: true });
+	window.addEventListener('load', updateActiveLink);
+	updateActiveLink();
+
 	if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 	gsap.registerPlugin(ScrollTrigger);
 
