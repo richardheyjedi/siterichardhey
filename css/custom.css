@@ -138,6 +138,32 @@ html {
 	margin-bottom: 1.5rem;
 }
 
+/* ---- Hero: tag, headline e texto centralizados ---- */
+.hero__content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.hero__title {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.hero__text {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Mobile: afasta a estrela decorativa do título centralizado */
+@media (max-width: 767.98px) {
+	.decor-hero__star {
+		top: 44%;
+		right: 6%;
+	}
+}
+
 .sobre-tag {
 	display: flex;
 	justify-content: center;
@@ -251,16 +277,42 @@ html {
 @media (max-width: 767.98px) {
 	.sobre-historia__grid {
 		grid-template-columns: 1fr;
+		gap: 1.25rem;
+	}
+
+	.sobre-lead {
+		padding: 0 0.5rem;
+	}
+
+	.sobre-card {
+		text-align: center;
+		padding: 1.5rem 1.25rem;
+	}
+
+	.sobre-historia__text {
+		border-left: 0;
+		padding-left: 0;
+		text-align: center;
+	}
+
+	.sobre-quote {
+		padding: 0 0.5rem;
 	}
 }
 
 /* ---- Clientes & Parceiros ---- */
 .clientes {
 	margin-top: clamp(3.5rem, 3rem + 2.5vw, 5.5rem);
+	background: rgba(18, 18, 18, 0.72);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 1.5rem;
+	padding: 2rem 2rem 2.25rem;
 }
 
 .clientes__label {
-	color: rgba(255, 255, 255, 0.45);
+	color: rgba(255, 255, 255, 0.65);
 	font-size: 0.8125rem;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
@@ -268,12 +320,21 @@ html {
 	margin-bottom: 2rem;
 }
 
-.clientes__grid {
+.clientes__carousel {
+	display: flex;
+	justify-content: center;
+}
+
+.clientes__group {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
 	gap: 2rem 3.5rem;
+}
+
+.clientes__group--dup {
+	display: none;
 }
 
 .clientes__item {
@@ -286,12 +347,58 @@ html {
 	height: clamp(1.625rem, 1.4rem + 1.1vw, 2.5rem);
 	width: auto;
 	filter: brightness(0) invert(1);
-	opacity: 0.6;
+	opacity: 0.75;
 	transition: opacity 0.3s ease;
 }
 
 .clientes__item:hover img {
 	opacity: 1;
+}
+
+/* Mobile: carrossel infinito de logos */
+@media (max-width: 767.98px) {
+	.clientes {
+		padding: 1.75rem 0 2rem;
+	}
+
+	.clientes__carousel {
+		justify-content: flex-start;
+		overflow: hidden;
+		-webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+		mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+	}
+
+	.clientes__group {
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+		gap: 0;
+		animation: clientesScroll 24s linear infinite;
+	}
+
+	.clientes__group--dup {
+		display: flex;
+	}
+
+	.clientes__item {
+		flex: 0 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	.clientes__item img {
+		height: 1.75rem;
+		opacity: 0.85;
+	}
+}
+
+@keyframes clientesScroll {
+	from { transform: translateX(0); }
+	to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.clientes__group {
+		animation: none;
+	}
 }
 
 .clientes__item--text {
@@ -366,6 +473,17 @@ html {
 /* ---- Rodapé: destaque para as redes sociais ---- */
 .footer__location {
 	margin-bottom: 2rem;
+	opacity: 1 !important;
+	transform: none !important;
+}
+
+.location-footer__subtext {
+	color: #5a5a5a;
+}
+
+.location-footer__city {
+	color: #1a1a1a;
+	font-weight: 600;
 }
 
 .footer__social {
@@ -413,5 +531,9 @@ html {
 
 	.footer__copyrate {
 		justify-content: center;
+	}
+
+	.footer__body {
+		padding-bottom: 3rem;
 	}
 }

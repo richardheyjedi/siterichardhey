@@ -1,8 +1,31 @@
 // Richard Hey Studios — animações e experiência (GSAP)
 (function () {
 	if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 	gsap.registerPlugin(ScrollTrigger);
+
+	/* ---------- Hero: garante o título sempre visível ----------
+	   A intro do template (app.min.js) usa gsap.from + ScrollTrigger no #title,
+	   o que pode travar o título com opacity 0 após um refresh. Substituímos
+	   por uma intro própria que sempre termina visível. */
+	var heroTitle = document.getElementById('title');
+	if (heroTitle) {
+		gsap.killTweensOf(heroTitle);
+		ScrollTrigger.getAll().forEach(function (st) {
+			if (st.trigger === heroTitle) st.kill();
+		});
+	}
+
+	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		if (heroTitle) gsap.set(heroTitle, { clearProps: 'all' });
+		return;
+	}
+
+	if (heroTitle) {
+		gsap.fromTo(heroTitle,
+			{ x: 0, y: 34, opacity: 0 },
+			{ x: 0, y: 0, opacity: 1, duration: 1.1, delay: 1.15, ease: 'power3.out', clearProps: 'transform,opacity' }
+		);
+	}
 
 	var finePointer = window.matchMedia('(pointer: fine)').matches;
 
@@ -142,21 +165,8 @@
 		document.querySelectorAll('.link__item').forEach(function (el) { addTilt(el, 2); });
 	}
 
-	/* ---------- Rodapé: título e redes em cascata ---------- */
-	gsap.from('.footer__location', {
-		opacity: 0,
-		y: 30,
-		duration: 0.7,
-		ease: 'power2.out',
-		scrollTrigger: { trigger: '.footer__location', start: 'top 92%' }
-	});
-
-	gsap.from('.social-footer__item', {
-		opacity: 0,
-		y: 24,
-		stagger: 0.07,
-		duration: 0.5,
-		ease: 'power2.out',
-		scrollTrigger: { trigger: '.social-footer__list', start: 'top 92%' }
+	/* Recalcula os gatilhos depois que imagens carregam (evita reveals travados no mobile) */
+	window.addEventListener('load', function () {
+		ScrollTrigger.refresh();
 	});
 })();
