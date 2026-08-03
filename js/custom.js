@@ -8,8 +8,10 @@
 	   o que pode travar o título com opacity 0 após um refresh. Substituímos
 	   por uma intro própria que sempre termina visível. */
 	var heroTitle = document.getElementById('title');
+	var heroText = document.querySelector('.hero__text');
 	var heroCircle = document.querySelector('.decor-hero__circle');
-	[heroTitle, heroCircle].forEach(function (el) {
+	var heroCta = document.querySelector('.hero__cta');
+	[heroTitle, heroText, heroCircle].forEach(function (el) {
 		if (!el) return;
 		gsap.killTweensOf(el);
 		ScrollTrigger.getAll().forEach(function (st) {
@@ -18,8 +20,9 @@
 	});
 
 	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-		if (heroTitle) gsap.set(heroTitle, { clearProps: 'all' });
-		if (heroCircle) gsap.set(heroCircle, { clearProps: 'all' });
+		[heroTitle, heroText, heroCircle].forEach(function (el) {
+			if (el) gsap.set(el, { clearProps: 'all' });
+		});
 		return;
 	}
 
@@ -30,10 +33,24 @@
 		);
 	}
 
+	if (heroText) {
+		gsap.fromTo(heroText,
+			{ x: 0, y: 24, opacity: 0 },
+			{ x: 0, y: 0, opacity: 1, duration: 0.9, delay: 1.5, ease: 'power2.out', clearProps: 'transform,opacity' }
+		);
+	}
+
 	if (heroCircle) {
 		gsap.fromTo(heroCircle,
 			{ opacity: 0 },
 			{ opacity: 1, duration: 1.2, delay: 1.6, ease: 'power2.out', clearProps: 'opacity' }
+		);
+	}
+
+	if (heroCta) {
+		gsap.fromTo(heroCta,
+			{ y: 24, opacity: 0 },
+			{ y: 0, opacity: 1, duration: 0.9, delay: 1.75, ease: 'power2.out', clearProps: 'transform,opacity' }
 		);
 	}
 
